@@ -1,0 +1,37 @@
+/*
+    Estilos complementares da animação.
+    O restante da página está no index.html.
+*/
+
+.scroll-scene {
+    isolation: isolate;
+}
+
+.sticky-stage {
+    contain: layout paint;
+}
+
+#sequence-canvas {
+    display: block;
+
+    image-rendering: auto;
+
+    backface-visibility: hidden;
+}
+
+.stage-copy {
+    pointer-events: none;
+}
+
+.progress-track {
+    pointer-events: none;
+}
+
+@media (max-width: 600px) {
+
+    #sequence-canvas {
+        min-width: 100%;
+        min-height: 100%;
+    }
+
+}
