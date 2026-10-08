@@ -1,479 +1,241 @@
+
 (() => {
+  "use strict";
 
-    "use strict";
+  const TOTAL_FRAMES = 180;
+  const FRAME_PATH = "./frames/frame-";
+  const FRAME_EXTENSION = ".jpg";
+  const MAX_CONCURRENT = 6;
 
-    const canvas =
-        document.getElementById("sequence-canvas");
+  const canvas = document.getElementById("sequence-canvas");
+  const section = document.querySelector(".scroll-scene");
+  const visual = document.querySelector(".experience-visual");
 
-    const status =
-        document.getElementById("loading-status");
+  if (!canvas || !section || !visual) return;
 
-    const progress =
-        document.getElementById("progress-bar");
+  const ctx = canvas.getContext("2d", {
+    alpha: false,
+    desynchronized: true
+  });
 
-    if (!canvas) {
-        return;
-    }
+  const images = new Array(TOTAL_FRAMES);
+  const loaded = new Array(TOTAL_FRAMES).fill(false);
+  const loading = new Set();
+  const failed = new Set();
 
+  let activeLoads = 0;
+  let targetFrame = 0;
+  let lastDrawn = -1;
+  let drawPending = false;
+  let scrollPending = false;
+  let canvasWidth = 0;
+  let canvasHeight = 0;
 
-    const ctx =
-        canvas.getContext("2d", {
-            alpha: false
-        });
+  const pad = n => String(n).padStart(4, "0");
 
+  function frameUrl(index) {
+    return FRAME_PATH + pad(index + 1) + FRAME_EXTENSION;
+  }
 
-    const TOTAL_FRAMES = 117;
+  function resizeCanvas() {
+    const rect = canvas.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
 
-    const FRAME_PATH =
-        "frames/frame-";
+    const width = Math.max(1, Math.round(rect.width * dpr));
+    const height = Math.max(1, Math.round(rect.height * dpr));
 
+    if (width === canvasWidth && height === canvasHeight) return;
 
-    const images =
-        new Array(TOTAL_FRAMES);
+    canvasWidth = width;
+    canvasHeight = height;
 
-    let loadedFrames = 0;
+    canvas.width = width;
+    canvas.height = height;
 
-    let currentFrame = 0;
+    lastDrawn = -1;
+    requestDraw();
+  }
 
-    let targetFrame = 0;
+  function requestDraw() {
+    if (drawPending) return;
 
-    let animationRunning = false;
+    drawPending = true;
 
+    requestAnimationFrame(() => {
+      drawPending = false;
+      drawFrame();
+    });
+  }
 
-    /* =========================================================
-       DEVICE PIXEL RATIO
-    ========================================================= */
+  function drawFrame() {
+    if (!canvasWidth || !canvasHeight) return;
 
-    function resizeCanvas() {
+    let index = targetFrame;
 
-        const rect =
-            canvas.getBoundingClientRect();
+    // Se o frame desejado ainda não carregou,
+    // exibe o frame carregado mais próximo.
+    if (!loaded[index]) {
+      let closest = -1;
+      let shortestDistance = Infinity;
 
-        const dpr =
-            Math.min(
-                window.devicePixelRatio || 1,
-                2
-            );
-
-        canvas.width =
-            Math.round(rect.width * dpr);
-
-        canvas.height =
-            Math.round(rect.height * dpr);
-
-        ctx.setTransform(
-            dpr,
-            0,
-            0,
-            dpr,
-            0,
-            0
-        );
-
-        drawFrame(
-            Math.round(currentFrame)
-        );
-
-    }
-
-
-    /* =========================================================
-       LOAD FRAME
-    ========================================================= */
-
-    function loadFrame(index) {
-
-        return new Promise(resolve => {
-
-            const img =
-                new Image();
-
-            const frameNumber =
-                String(index + 1)
-                    .padStart(4, "0");
-
-
-            img.src =
-                `${FRAME_PATH}${frameNumber}.jpg`;
-
-
-            img.onload = () => {
-
-                images[index] = img;
-
-                loadedFrames++;
-
-                if (status) {
-
-                    status.textContent =
-                        `Carregando experiência... ${loadedFrames}/${TOTAL_FRAMES}`;
-
-                }
-
-                resolve(img);
-
-            };
-
-
-            img.onerror = () => {
-
-                console.warn(
-                    `Não foi possível carregar: ${img.src}`
-                );
-
-                resolve(null);
-
-            };
-
-        });
-
-    }
-
-
-    /* =========================================================
-       COVER DRAW
-    ========================================================= */
-
-    function drawCover(
-        image,
-        width,
-        height
-    ) {
-
-        if (!image) {
-            return;
-        }
-
-        const imageRatio =
-            image.naturalWidth /
-            image.naturalHeight;
-
-        const canvasRatio =
-            width / height;
-
-
-        let drawWidth;
-        let drawHeight;
-
-        let offsetX;
-        let offsetY;
-
-
-        if (imageRatio > canvasRatio) {
-
-            drawHeight =
-                height;
-
-            drawWidth =
-                height * imageRatio;
-
-            offsetX =
-                (width - drawWidth) / 2;
-
-            offsetY = 0;
-
-        } else {
-
-            drawWidth =
-                width;
-
-            drawHeight =
-                width / imageRatio;
-
-            offsetX = 0;
-
-            offsetY =
-                (height - drawHeight) / 2;
-
-        }
-
-
-        ctx.drawImage(
-            image,
-            offsetX,
-            offsetY,
-            drawWidth,
-            drawHeight
-        );
-
-    }
-
-
-    /* =========================================================
-       DRAW FRAME
-    ========================================================= */
-
-    function drawFrame(index) {
-
-        if (!images[index]) {
-
-            let fallback =
-                index;
-
-            while (
-                fallback > 0 &&
-                !images[fallback]
-            ) {
-                fallback--;
-            }
-
-            if (!images[fallback]) {
-                return;
-            }
-
-            index = fallback;
-
-        }
-
-
-        const width =
-            canvas.clientWidth;
-
-        const height =
-            canvas.clientHeight;
-
-
-        ctx.fillStyle =
-            "#151515";
-
-        ctx.fillRect(
-            0,
-            0,
-            width,
-            height
-        );
-
-
-        drawCover(
-            images[index],
-            width,
-            height
-        );
-
-    }
-
-
-    /* =========================================================
-       UPDATE TARGET FROM SCROLL
-    ========================================================= */
-
-    function updateScroll() {
-
-        const scene =
-            canvas.closest(
-                ".scroll-scene"
-            );
-
-        if (!scene) {
-            return;
-        }
-
-
-        const rect =
-            scene.getBoundingClientRect();
-
-        const scrollable =
-            scene.offsetHeight -
-            window.innerHeight;
-
-
-        let progressValue =
-            -rect.top / scrollable;
-
-
-        progressValue =
-            Math.max(
-                0,
-                Math.min(
-                    1,
-                    progressValue
-                )
-            );
-
-
-        targetFrame =
-            progressValue *
-            (TOTAL_FRAMES - 1);
-
-
-        if (progress) {
-
-            progress.style.height =
-                `${progressValue * 100}%`;
-
-        }
-
-
-        if (!animationRunning) {
-
-            animationRunning = true;
-
-            requestAnimationFrame(
-                animate
-            );
-
-        }
-
-    }
-
-
-    /* =========================================================
-       SMOOTH FRAME ANIMATION
-    ========================================================= */
-
-    function animate() {
-
-        const difference =
-            targetFrame -
-            currentFrame;
-
-
+      for (let i = 0; i < TOTAL_FRAMES; i++) {
         if (
-            Math.abs(difference) >
-            0.05
+          loaded[i] &&
+          Math.abs(i - targetFrame) < shortestDistance
         ) {
-
-            currentFrame +=
-                difference * 0.18;
-
-        } else {
-
-            currentFrame =
-                targetFrame;
-
+          closest = i;
+          shortestDistance = Math.abs(i - targetFrame);
         }
+      }
 
-
-        drawFrame(
-            Math.round(currentFrame)
-        );
-
-
-        if (
-            Math.abs(
-                targetFrame -
-                currentFrame
-            ) > 0.05
-        ) {
-
-            requestAnimationFrame(
-                animate
-            );
-
-        } else {
-
-            animationRunning = false;
-
-        }
-
+      if (closest === -1) return;
+      index = closest;
     }
 
+    if (index === lastDrawn) return;
 
-    /* =========================================================
-       LOAD ALL FRAMES
-    ========================================================= */
+    const img = images[index];
+    if (!img || !img.naturalWidth) return;
 
-    async function preload() {
-
-        if (status) {
-
-            status.textContent =
-                "Preparando a experiência...";
-
-        }
-
-
-        /*
-         * Carrega primeiro o frame inicial
-         * para mostrar algo imediatamente.
-         */
-
-        await loadFrame(0);
-
-        drawFrame(0);
-
-
-        /*
-         * Depois carrega os demais.
-         */
-
-        const promises = [];
-
-        for (
-            let i = 1;
-            i < TOTAL_FRAMES;
-            i++
-        ) {
-
-            promises.push(
-                loadFrame(i)
-            );
-
-        }
-
-
-        await Promise.all(
-            promises
-        );
-
-
-        if (status) {
-
-            status.textContent =
-                "Role para explorar a experiência.";
-
-        }
-
-    }
-
-
-    /* =========================================================
-       EVENTS
-    ========================================================= */
-
-    window.addEventListener(
-        "scroll",
-        updateScroll,
-        {
-            passive: true
-        }
+    const scale = Math.max(
+      canvasWidth / img.naturalWidth,
+      canvasHeight / img.naturalHeight
     );
 
+    const width = img.naturalWidth * scale;
+    const height = img.naturalHeight * scale;
+    const x = (canvasWidth - width) / 2;
+    const y = (canvasHeight - height) / 2;
 
-    window.addEventListener(
-        "resize",
-        resizeCanvas
-    );
+    ctx.fillStyle = "#e8e2da";
+    ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+    ctx.drawImage(img, x, y, width, height);
 
+    lastDrawn = index;
+  }
 
-    /* =========================================================
-       REDUCED MOTION
-    ========================================================= */
+  // Fila de carregamento priorizada pela proximidade
+  // do frame solicitado durante a rolagem.
+  const queue = [];
+  const queued = new Set();
 
-    const reducedMotion =
-        window.matchMedia(
-            "(prefers-reduced-motion: reduce)"
-        );
+  function enqueue(index) {
+    if (index < 0 || index >= TOTAL_FRAMES) return;
+    if (loaded[index] || loading.has(index) || failed.has(index)) return;
+    if (queued.has(index)) return;
 
+    queue.push(index);
+    queued.add(index);
+  }
 
-    if (reducedMotion.matches) {
+  function loadFrame(index) {
+    if (loaded[index] || loading.has(index) || failed.has(index)) return;
+    if (activeLoads >= MAX_CONCURRENT) return;
 
-        if (status) {
+    loading.add(index);
+    activeLoads++;
 
-            status.textContent =
-                "Experiência visual simplificada.";
+    const img = new Image();
+    images[index] = img;
+    img.decoding = "async";
 
-        }
+    img.onload = () => {
+      loaded[index] = true;
+      loading.delete(index);
+      activeLoads--;
 
+      requestDraw();
+      pumpQueue();
+    };
+
+    img.onerror = () => {
+      failed.add(index);
+      loading.delete(index);
+      activeLoads--;
+
+      pumpQueue();
+    };
+
+    img.src = frameUrl(index);
+  }
+
+  function prioritizeFrame(center) {
+    const pending = queue.splice(0);
+    queued.clear();
+
+    // Coloca primeiro os frames próximos ao atual.
+    const candidates = [...pending];
+
+    for (let distance = 0; distance < TOTAL_FRAMES; distance++) {
+      const forward = center + distance;
+      const backward = center - distance;
+
+      if (forward < TOTAL_FRAMES) candidates.push(forward);
+      if (distance > 0 && backward >= 0) candidates.push(backward);
     }
 
+    const unique = [...new Set(candidates)];
 
-    /* =========================================================
-       START
-    ========================================================= */
+    unique.sort(
+      (a, b) => Math.abs(a - center) - Math.abs(b - center)
+    );
 
+    unique.forEach(index => enqueue(index));
+    pumpQueue();
+  }
+
+  function pumpQueue() {
+    while (activeLoads < MAX_CONCURRENT && queue.length) {
+      const index = queue.shift();
+      queued.delete(index);
+      loadFrame(index);
+    }
+  }
+
+  function updateFromScroll() {
+    const rect = visual.getBoundingClientRect();
+    const scrollDistance = Math.max(
+      1,
+      visual.offsetHeight - window.innerHeight
+    );
+
+    const progress = Math.min(
+      1,
+      Math.max(0, -rect.top / scrollDistance)
+    );
+
+    const nextFrame = Math.round(
+      progress * (TOTAL_FRAMES - 1)
+    );
+
+    if (nextFrame === targetFrame) return;
+
+    targetFrame = nextFrame;
+
+    // Prioriza o frame atual e os próximos,
+    // mantendo uma pequena margem de antecipação.
+    prioritizeFrame(targetFrame);
+    requestDraw();
+  }
+
+  window.addEventListener("scroll", () => {
+    if (scrollPending) return;
+
+    scrollPending = true;
+
+    requestAnimationFrame(() => {
+      scrollPending = false;
+      updateFromScroll();
+    });
+  }, { passive: true });
+
+  window.addEventListener("resize", () => {
     resizeCanvas();
+    updateFromScroll();
+  }, { passive: true });
 
-    preload();
-
+  // Inicialização: carrega os primeiros frames.
+  resizeCanvas();
+  prioritizeFrame(0);
+  updateFromScroll();
 })();
