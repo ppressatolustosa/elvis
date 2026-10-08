@@ -1,35 +1,412 @@
-<section class="scroll-scene" id="experiencia">
-  <div class="experience-copy">
-    <div class="experience-copy-inner">
-      <p class="eyebrow">ELVIS LUSTOSA · BELEZA E ESTILO</p>
 
-      <h2>
-        Seu estilo.<br>
-        <em>Sua identidade.</em>
-      </h2>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-      <p class="experience-lead">
-        Um espaço pensado para valorizar a sua beleza, respeitar
-        a sua individualidade e transformar cada visita em uma
-        experiência única.
+  <title>Elvis Lustosa | Beleza, Estilo e Identidade</title>
+  <meta name="description" content="Conheça Elvis Lustosa, um espaço de beleza e estilo com atendimento personalizado para mulheres e homens. Agende seu horário.">
+  <meta name="theme-color" content="#171613">
+
+  <meta property="og:title" content="Elvis Lustosa | Beleza e Estilo">
+  <meta property="og:description" content="Sua beleza, sua identidade. Descubra uma experiência personalizada.">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./sequence.css">
+  <script src="./sequence.js" defer></script>
+</head>
+
+<body>
+  <header class="site-header" id="inicio">
+    <a class="brand" href="#inicio" aria-label="Elvis Lustosa, início">
+      <span class="brand-mark">EL</span>
+      <span class="brand-name">ELVIS LUSTOSA<small>BELEZA · ESTILO · IDENTIDADE</small></span>
+    </a>
+
+    <button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+
+    <nav class="main-nav" aria-label="Navegação principal">
+      <a href="#sobre">Sobre</a>
+      <a href="#servicos">Serviços</a>
+      <a href="#galeria">Galeria</a>
+      <a href="#contato">Contato</a>
+      <a class="nav-cta" href="#contato">Agendar horário <span>↗</span></a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-content">
+        <p class="eyebrow"><span class="eyebrow-line"></span> BELEZA SEM RÓTULOS</p>
+        <h1>Seu estilo.<br><em>Sua identidade.</em></h1>
+        <p class="hero-description">
+          Mais do que transformar o visual, criamos experiências que valorizam
+          quem você é. Beleza, cuidado e personalidade em cada detalhe.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#contato" class="button button-primary">Agende sua experiência <span>↗</span></a>
+          <a href="#sobre" class="text-link">Conheça nosso espaço <span>↓</span></a>
+        </div>
+
+        <div class="hero-bottom">
+          <span>ATENDIMENTO PERSONALIZADO</span>
+          <span>PARA MULHERES E HOMENS</span>
+        </div>
+      </div>
+
+      <div class="hero-image">
+        <img src="./images/hero.jpg" alt="Ambiente do salão Elvis Lustosa" fetchpriority="high">
+        <div class="hero-image-caption">
+          <span>01 / SUA MELHOR VERSÃO</span>
+          <span>BELEZA COM PROPÓSITO</span>
+        </div>
+      </div>
+
+      <span class="hero-index">EL — 001</span>
+    </section>
+
+    <!-- ANIMAÇÃO DE SCROLL: TEXTO À ESQUERDA, FRAMES À DIREITA -->
+    <section class="scroll-scene" id="experiencia" aria-label="Experiência Elvis Lustosa">
+      <div class="experience-copy">
+        <div class="experience-copy-inner">
+          <p class="eyebrow"><span class="eyebrow-line"></span> ELVIS LUSTOSA</p>
+
+          <h2>Uma nova forma<br>de expressar <em>quem você é.</em></h2>
+
+          <p class="experience-lead">
+            Cada pessoa tem uma história, um estilo e uma forma única de se expressar.
+            Nosso trabalho é revelar isso através de um atendimento cuidadoso,
+            técnica e atenção aos detalhes.
+          </p>
+
+          <a href="#contato" class="button button-primary">
+            Vamos conversar <span>↗</span>
+          </a>
+
+          <p class="experience-note">
+            Um espaço para todos. Um cuidado feito para você.
+          </p>
+        </div>
+      </div>
+
+      <div class="experience-visual">
+        <div class="sticky-stage">
+          <canvas id="sequence-canvas" aria-label="Sequência animada de transformação capilar">
+            Seu navegador não suporta canvas.
+          </canvas>
+          <div class="frame-counter" aria-hidden="true">
+            <span>TRANSFORMAÇÃO</span>
+            <span id="frame-number">001 / 180</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOBRE -->
+    <section class="section about-section" id="sobre">
+      <div class="section-heading">
+        <p class="eyebrow"><span class="eyebrow-line"></span> NOSSA ESSÊNCIA</p>
+        <h2>Beleza é se sentir<br><em>bem com você.</em></h2>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-image about-image-large">
+          <img src="./images/sobre-01.jpg" alt="Detalhes do espaço Elvis Lustosa" loading="lazy">
+          <span class="image-label">UM ESPAÇO PARA VOCÊ</span>
+        </div>
+
+        <div class="about-text">
+          <p class="large-copy">
+            Acreditamos que o cuidado com a aparência começa com algo maior:
+            a liberdade de ser você.
+          </p>
+          <p>
+            Por isso, cada atendimento é pensado individualmente. Escutamos suas
+            preferências, entendemos suas expectativas e buscamos um resultado
+            que combine com sua rotina, personalidade e estilo.
+          </p>
+          <p>
+            Sem padrões impostos. Sem fórmulas prontas. Apenas técnica,
+            cuidado e respeito pela sua identidade.
+          </p>
+          <a href="#servicos" class="text-link">Descubra nossos serviços <span>↗</span></a>
+        </div>
+      </div>
+
+      <div class="values-grid">
+        <article class="value-item">
+          <span class="value-number">01</span>
+          <h3>Individualidade</h3>
+          <p>Cada pessoa é única. Nosso atendimento também.</p>
+        </article>
+        <article class="value-item">
+          <span class="value-number">02</span>
+          <h3>Excelência</h3>
+          <p>Atenção aos detalhes, técnica e compromisso com o resultado.</p>
+        </article>
+        <article class="value-item">
+          <span class="value-number">03</span>
+          <h3>Acolhimento</h3>
+          <p>Um ambiente confortável, respeitoso e aberto a todos.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- SERVIÇOS -->
+    <section class="section services-section" id="servicos">
+      <div class="section-heading section-heading-row">
+        <div>
+          <p class="eyebrow"><span class="eyebrow-line"></span> O QUE FAZEMOS</p>
+          <h2>Cuidado em cada<br><em>detalhe.</em></h2>
+        </div>
+        <p class="heading-description">
+          Serviços pensados para valorizar sua beleza e combinar com o seu estilo.
+          Consulte as opções disponíveis no momento do agendamento.
+        </p>
+      </div>
+
+      <div class="services-grid">
+        <article class="service-card">
+          <div class="service-image">
+            <img src="./images/servico-01.jpg" alt="Corte e estilo" loading="lazy">
+            <span class="service-number">01</span>
+          </div>
+          <div class="service-info">
+            <div><h3>Cortes e estilo</h3><p>Um visual que combina com você.</p></div>
+            <a href="#contato" aria-label="Agendar cortes e estilo">↗</a>
+          </div>
+        </article>
+
+        <article class="service-card">
+          <div class="service-image">
+            <img src="./images/servico-02.jpg" alt="Coloração e transformação" loading="lazy">
+            <span class="service-number">02</span>
+          </div>
+          <div class="service-info">
+            <div><h3>Coloração</h3><p>Cor, personalidade e expressão.</p></div>
+            <a href="#contato" aria-label="Agendar coloração">↗</a>
+          </div>
+        </article>
+
+        <article class="service-card">
+          <div class="service-image">
+            <img src="./images/servico-03.jpg" alt="Tratamentos capilares" loading="lazy">
+            <span class="service-number">03</span>
+          </div>
+          <div class="service-info">
+            <div><h3>Tratamentos</h3><p>Cuidado para a saúde dos fios.</p></div>
+            <a href="#contato" aria-label="Agendar tratamento">↗</a>
+          </div>
+        </article>
+
+        <article class="service-card">
+          <div class="service-image">
+            <img src="./images/servico-04.jpg" alt="Finalização e penteado" loading="lazy">
+            <span class="service-number">04</span>
+          </div>
+          <div class="service-info">
+            <div><h3>Finalização</h3><p>O toque final para seu visual.</p></div>
+            <a href="#contato" aria-label="Agendar finalização">↗</a>
+          </div>
+        </article>
+
+        <article class="service-card">
+          <div class="service-image">
+            <img src="./images/servico-05.jpg" alt="Consultoria de estilo" loading="lazy">
+            <span class="service-number">05</span>
+          </div>
+          <div class="service-info">
+            <div><h3>Consultoria de estilo</h3><p>Encontre possibilidades para sua identidade.</p></div>
+            <a href="#contato" aria-label="Consultar serviços de estilo">↗</a>
+          </div>
+        </article>
+      </div>
+
+      <p class="services-disclaimer">
+        A disponibilidade dos serviços e os valores devem ser confirmados pelo WhatsApp.
       </p>
+    </section>
 
-      <a href="#contato" class="button button-primary">
-        Agende seu horário
-      </a>
+    <!-- FRASE DE IMPACTO -->
+    <section class="manifesto">
+      <p class="eyebrow">MAIS QUE APARÊNCIA</p>
+      <h2>Não é sobre seguir tendências.<br>É sobre <em>ser você.</em></h2>
+      <a href="#contato" class="text-link">Comece por você <span>↗</span></a>
+    </section>
 
-      <p class="experience-note">
-        Atendimento personalizado para mulheres e homens.
+    <!-- GALERIA -->
+    <section class="section gallery-section" id="galeria">
+      <div class="section-heading section-heading-row">
+        <div>
+          <p class="eyebrow"><span class="eyebrow-line"></span> NOSSO TRABALHO</p>
+          <h2>Inspiração em<br><em>cada detalhe.</em></h2>
+        </div>
+        <p class="heading-description">
+          Cada resultado tem sua própria personalidade. Confira alguns registros
+          do nosso universo de beleza e estilo.
+        </p>
+      </div>
+
+      <div class="gallery-grid">
+        <figure class="gallery-item gallery-tall">
+          <img src="./images/galeria-01.jpg" alt="Resultado de corte e estilo" loading="lazy">
+          <figcaption>FORMA & IDENTIDADE <span>01</span></figcaption>
+        </figure>
+        <figure class="gallery-item">
+          <img src="./images/galeria-02.jpg" alt="Detalhes de um trabalho de beleza" loading="lazy">
+          <figcaption>DETALHES <span>02</span></figcaption>
+        </figure>
+        <figure class="gallery-item">
+          <img src="./images/galeria-03.jpg" alt="Transformação de visual" loading="lazy">
+          <figcaption>TRANSFORMAÇÃO <span>03</span></figcaption>
+        </figure>
+        <figure class="gallery-item">
+          <img src="./images/galeria-04.jpg" alt="Estilo e personalidade" loading="lazy">
+          <figcaption>EXPRESSÃO <span>04</span></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- DEPOIMENTOS -->
+    <section class="section testimonials-section">
+      <div class="section-heading">
+        <p class="eyebrow"><span class="eyebrow-line"></span> EXPERIÊNCIAS REAIS</p>
+        <h2>O melhor resultado<br>é <em>se sentir bem.</em></h2>
+      </div>
+
+      <div class="testimonial-grid">
+        <article class="testimonial-card">
+          <span class="quote-mark">“</span>
+          <p>Adorei a atenção aos detalhes e o cuidado em entender o que eu queria.</p>
+          <span class="testimonial-author">CLIENTE ELVIS LUSTOSA</span>
+        </article>
+        <article class="testimonial-card">
+          <span class="quote-mark">“</span>
+          <p>Um atendimento acolhedor e uma experiência que dá vontade de repetir.</p>
+          <span class="testimonial-author">CLIENTE ELVIS LUSTOSA</span>
+        </article>
+        <article class="testimonial-card">
+          <span class="quote-mark">“</span>
+          <p>Gostei de poder conversar sobre meu estilo e encontrar um resultado que combina comigo.</p>
+          <span class="testimonial-author">CLIENTE ELVIS LUSTOSA</span>
+        </article>
+      </div>
+      <p class="services-disclaimer">
+        Substitua estes exemplos por depoimentos reais de clientes antes de publicar.
       </p>
-    </div>
-  </div>
+    </section>
 
-  <div class="experience-visual">
-    <div class="sticky-stage">
-      <canvas
-        id="sequence-canvas"
-        aria-label="Animação de transformação de cabelo"
-      ></canvas>
-    </div>
-  </div>
-</section>
+    <!-- FAQ -->
+    <section class="section faq-section" id="faq">
+      <div class="faq-intro">
+        <p class="eyebrow"><span class="eyebrow-line"></span> DÚVIDAS FREQUENTES</p>
+        <h2>Vamos esclarecer<br><em>suas dúvidas.</em></h2>
+      </div>
+
+      <div class="faq-list">
+        <details>
+          <summary>O espaço atende mulheres e homens?<span>+</span></summary>
+          <p>Sim. O atendimento é personalizado e voltado para mulheres e homens, respeitando as preferências e necessidades de cada pessoa.</p>
+        </details>
+        <details>
+          <summary>Como posso agendar um horário?<span>+</span></summary>
+          <p>Você pode entrar em contato pelo WhatsApp usando qualquer botão de agendamento deste site.</p>
+        </details>
+        <details>
+          <summary>Como consulto os serviços e valores?<span>+</span></summary>
+          <p>Entre em contato pelo WhatsApp para confirmar os serviços disponíveis, os valores e o tempo estimado de atendimento.</p>
+        </details>
+        <details>
+          <summary>Onde fica o salão?<span>+</span></summary>
+          <p>Consulte o mapa na seção de contato. Confirme o endereço antes de publicar o site para garantir que a localização esteja correta.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- CONTATO -->
+    <section class="contact-section" id="contato">
+      <div class="contact-content">
+        <p class="eyebrow"><span class="eyebrow-line"></span> SEU PRÓXIMO CAPÍTULO</p>
+        <h2>Seu momento<br><em>começa aqui.</em></h2>
+        <p>Conte o que você está buscando. Vamos conversar sobre seu próximo visual.</p>
+
+        <form id="contact-form">
+          <label for="nome">Seu nome</label>
+          <input id="nome" name="nome" type="text" placeholder="Como podemos te chamar?" required>
+
+          <label for="servico">O que você procura?</label>
+          <select id="servico" name="servico" required>
+            <option value="">Selecione um serviço</option>
+            <option>Cortes e estilo</option>
+            <option>Coloração</option>
+            <option>Tratamentos</option>
+            <option>Finalização</option>
+            <option>Consultoria de estilo</option>
+            <option>Quero tirar dúvidas</option>
+          </select>
+
+          <label for="mensagem">Conte um pouco mais (opcional)</label>
+          <textarea id="mensagem" name="mensagem" rows="3" placeholder="Como podemos ajudar?"></textarea>
+
+          <button class="button button-primary form-submit" type="submit">
+            Continuar pelo WhatsApp <span>↗</span>
+          </button>
+          <p class="form-note">O envio abrirá uma conversa no WhatsApp para você confirmar o agendamento.</p>
+        </form>
+      </div>
+
+      <div class="contact-side">
+        <div class="contact-photo">
+          <img src="./images/sobre-02.jpg" alt="Detalhes do espaço" loading="lazy">
+        </div>
+
+        <div class="contact-details">
+          <div>
+            <span class="detail-label">FALE CONOSCO</span>
+            <a id="contact-whatsapp-link" href="#" target="_blank" rel="noopener">WhatsApp ↗</a>
+          </div>
+          <div>
+            <span class="detail-label">ACOMPANHE</span>
+            <a id="instagram-link" href="#" target="_blank" rel="noopener">Instagram ↗</a>
+          </div>
+          <div>
+            <span class="detail-label">LOCALIZAÇÃO</span>
+            <p id="address-text">Atualize o endereço do salão nas configurações do site.</p>
+          </div>
+        </div>
+
+        <div class="map-wrap">
+          <iframe
+            id="google-map"
+            title="Localização do salão Elvis Lustosa"
+            src="https://www.google.com/maps?q=Tucuruvi,S%C3%A3o%20Paulo&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="brand footer-brand" href="#inicio">
+      <span class="brand-mark">EL</span>
+      <span class="brand-name">ELVIS LUSTOSA<small>BELEZA · ESTILO · IDENTIDADE</small></span>
+    </a>
+
+    <p>Beleza que respeita quem você é.</p>
+    <a href="#inicio" class="back-top">VOLTAR AO TOPO ↑</a>
+    <span class="copyright">© <span id="current-year"></span> Elvis Lustosa. Todos os direitos reservados.</span>
+  </footer>
+</body>
+</html>
